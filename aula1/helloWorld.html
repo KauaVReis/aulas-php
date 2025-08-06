@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0E5039;
+            color: white;
+        }
+    
+        .center {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+            background-color: #0b3c2b;
+            color: white;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        #resultado{
+            margin-top: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <img src="../aula1/img/avante.png" alt="Logo Avante">
+    <p>O matheus é um grande cara, ele ama o Sub Tenente Alex</p>
+    <h1>Que tipo de Matheus voce é?</h1>
+    <div class="center">
+        <label for="">Digite o seu nome:</label>
+        <input type="text"><br>
+        <label for="">Digite a sua idade</label>
+        <input type="number"><br>
+        <label for="">Digite o numero do seu cartão</label>
+        <input type="number"><br>
+        <label for="">Digite o seu CVC</label>
+        <input type="number"><br><br>
+        <button onclick="qualMatheus()">Verificar</button><br>
+    </div>
+    <p id="resultado"></p>
+</body>
+  <script>
+        function qualMatheus() {
+            let numero = Math.floor(Math.random() * 6) + 1;
+
+            switch (numero) {
+                case 1:
+                    resultado = ("O seu Matheus é legal");
+                    break;
+                case 2:
+                    resultado = ("O seu Matheus é Gay");
+                    break;
+                case 3:
+                    resultado = ("O seu Matheus é burro");
+                    break;
+                case 4:
+                    resultado = ("O seu Matheus é amoroso");
+                    break;
+                case 5:
+                    resultado = ("Seu Matheus é Gordo");
+                    break;
+                case 6:
+                    resultado = ("O seu Matheus é um deus");
+                    break;
+                default:
+                    resultado = ("Error")
+                    break;
+            }
+            document.getElementById("resultado").innerText = resultado;
+        }
+    </script>
+</html>
