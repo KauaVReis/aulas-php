@@ -75,9 +75,10 @@
 
             $amanha = new DateTime();
             $amanha->modify("+1 day");
-            echo("Amanhã será: ". $amanha->format("d/m/y") ."<br>");
+            echo("Amanhã será: ". $amanha->format("d-m-y") ."<br>");
             $timestamp = strtotime("last Friday");
-            echo("Ultima sexta-feira foi: ". date("d/m/Y", $timestamp))            
+            echo("Ultima sexta-feira foi: ". date("d/m/Y", $timestamp) . "<br>"); 
+
         ?>
     </div>
 </body>

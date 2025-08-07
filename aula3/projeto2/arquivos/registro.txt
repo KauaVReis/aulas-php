@@ -1,0 +1,31 @@
+Luiz Gustavo|40812359704|01/12/2003|monteiromelissa@ig.com.br|55849287|homem  
+Antônio|12503976859|22/01/1997|rebecasilva@cardoso.net|55319322|outro  
+Laura|84329570629|08/03/2006|raulrodrigues@yahoo.com.br|55819568|outro  
+Francisco|70129834696|09/08/1990|theo17@caldeira.br|55619865|outro  
+Stella|64280935700|05/10/1986|pedro-miguel85@hotmail.com|55619949|mulher  
+João Gabriel|90452761867|31/03/1939|davi-lucas59@yahoo.com.br|55119749|mulher  
+André|83126057462|25/09/2002|samuelfernandes@uol.com.br|55619838|homem  
+Juliana|02967435856|10/05/2001|dteixeira@farias.br|55519313|outro  
+Evelyn|23487519097|13/12/1949|da-pazjoao-pedro@gmail.com|55419375|outro  
+Davi|17394608204|21/05/1946|qoliveira@hotmail.com|55319737|outro  
+Luiza|87294351619|07/01/1953|hda-rocha@castro.br|55219468|outro  
+João Gabriel|17835246937|05/11/1941|pedrocorreia@correia.org|55319266|mulher  
+Luiz Fernando|35914780241|25/11/2004|umoraes@ig.com.br|55849829|homem  
+Maria Vitória|02946173887|26/10/1963|caue01@ig.com.br|55119669|homem  
+Isaac|98163752068|14/02/1936|jgoncalves@uol.com.br|55119796|mulher  
+Breno|86729501430|21/04/1984|da-rosaisadora@araujo.net|55119942|homem  
+Luna|30847951260|16/04/1976|oliviada-costa@da.com|55819489|homem  
+Levi|35892107450|31/05/1957|ana-lauradas-neves@martins.com|55819930|mulher  
+Joaquim|68794152020|22/02/1938|da-rochanoah@bol.com.br|55519715|homem  
+Brenda|81693470500|06/08/1991|lucascardoso@ig.com.br|55319245|outro  
+Ana|63981402731|18/08/1958|rafaelbarbosa@nunes.br|55719133|outro  
+Ana|24317065916|07/04/1951|ramosana-livia@fernandes.com|55849283|outro  
+Vitor Gabriel|27693418555|23/03/1993|ana-beatriz18@yahoo.com.br|55419789|homem  
+Bernardo|15490362707|19/07/1970|piresbreno@sales.br|55519513|mulher  
+Gabriel|67810532480|14/03/1989|guilherme71@das.com|55419602|mulher  
+Noah|61432980769|23/11/1961|bdias@duarte.br|55319095|mulher  
+Lucca|70956283195|17/11/1968|anthony94@bol.com.br|55219519|mulher  
+Ana Júlia|30485762900|07/06/2005|emanuellarodrigues@ig.com.br|55849199|mulher  
+André|19305427804|21/09/1995|sophia24@gmail.com|55319202|mulher  
+Ryan|98134650260|31/12/1967|cunhagabriel@hotmail.com|55419693|outro  
+Ruan Torres|123456789|13/08/2025|ruan@gmail.com|214782432|mulher
