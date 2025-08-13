@@ -1,4 +1,4 @@
-Luiz Gustavo|40812359704|01/12/2003|monteiromelissa@ig.com.br|55849287|homem  
+Luiz Gustavo|40812359704|01/12/2003|monteiromelissa@ig.com.br|55849287|homem      
 Antônio|12503976859|22/01/1997|rebecasilva@cardoso.net|55319322|outro  
 Laura|84329570629|08/03/2006|raulrodrigues@yahoo.com.br|55819568|outro  
 Francisco|70129834696|09/08/1990|theo17@caldeira.br|55619865|outro  
@@ -29,3 +29,5 @@ Ana Júlia|30485762900|07/06/2005|emanuellarodrigues@ig.com.br|55849199|mulher
 André|19305427804|21/09/1995|sophia24@gmail.com|55319202|mulher  
 Ryan|98134650260|31/12/1967|cunhagabriel@hotmail.com|55419693|outro  
 Ruan Torres|123456789|13/08/2025|ruan@gmail.com|214782432|mulher
+Matheus |33218922821|21/08/2025|mathzila@gmail.com|10101010101|outro
+Pereira|111111|01/08/2025|ruan@gmail.com|41323231|ucfirst(outro)

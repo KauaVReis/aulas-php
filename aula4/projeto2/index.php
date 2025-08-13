@@ -1,10 +1,53 @@
+<?php
+$arquivo = "arquivos/registro.txt";
+
+// PROCESSA FORMULÁRIO
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $destino = "uploads/";
+    $curriculo = $_FILES["curriculo"];
+
+    if ($curriculo["error"] == UPLOAD_ERR_OK) {
+        $nome_temp = $curriculo["tmp_name"];
+        $nome_final = $destino . basename($curriculo["name"]);
+        $nome_arquivo = basename($curriculo["name"]);
+
+        if (!file_exists($destino)) {
+            mkdir($destino, 0755, true);
+        }
+        if (move_uploaded_file($nome_temp, $nome_final)) {
+            echo "Arquivo enviado com sucesso!";
+        } else {
+            echo "Falha ao mover o arquivo.";
+        }
+    } else {
+        echo "Erro no uploud: " . $curriculo["error"];
+    }
+    $nome        = $_POST['nome'];
+    $cpf         = $_POST['CPF'];
+    $nascimento  = $_POST['nascimento'];
+    $telefone    = $_POST['telefone'];
+    $endereco    = $_POST['endereco'];
+    $reaisHora   = $_POST['reaisHora'];
+    $HorasnoMes  = $_POST['HorasnoMes'];
+    $Curriculo   = $_POST['curriculo'];
+
+    $nascimento_f = date("d/m/Y", strtotime($nascimento));
+
+    $linha = "$nome|$cpf|$nascimento_f|$telefone|$endereco|$reaisHora|$HorasnoMes|$nome_final|$nome_arquivo\n";
+    file_put_contents($arquivo, $linha, FILE_APPEND);
+
+    // Redireciona para evitar reenvio ao dar F5
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabuada</title>
+    <title>Formulário e Registros</title>
     <style>
         /* Usei um tutorial para fazer as sombras estilo neumorfico */
         /* paleta de cor site
@@ -109,7 +152,6 @@
             background-color: var(--french-gray);
             color: var(--space-cadet);
             border: none;
-            /* tira a borda para dar o efeito limpo */
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 16px;
@@ -174,125 +216,165 @@
             width: 99%;
 
         }
+
+        #curriculo {
+            display: none;
+        }
+
+        /* Botão fake no estilo neumórfico */
+        .label-file {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--platinum);
+            border-radius: 8px;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+            box-shadow:
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .label-file:hover {
+            box-shadow:
+                inset 2px 2px 6px rgba(74, 78, 105, 0.4),
+                /* sombra escura da direita/baixo */
+                inset -2px -2px 6px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Texto do arquivo */
+        #file-name {
+            display: block;
+            margin-left: 12px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            margin: 6px 0px 6px 0px;
+        }
     </style>
 </head>
 
 <body>
     <div class="box">
         <h1>Formulario PHP</h1>
-        <form action="" method="post">
+        <form method="post" action="" enctype="multipart/form-data">
             <label for="nome">Digite o seu nome:</label>
             <input type="text" name="nome" id="nome" required>
+
             <label for="CPF">Digite o seu CPF:</label>
             <input type="text" name="CPF" id="CPF" required><br>
+
             <label for="nascimento">Data Nascimento:</label>
             <input type="date" name="nascimento" id="nascimento" required>
-            <label for="email">Digite o seu Email:</label>
-            <input type="email" name="email" id="email" required>
+
             <label for="telefone">Digite o seu Telefone:</label>
             <input type="tel" name="telefone" id="telefone" required>
-            <label for="genero">Escolha o seu genero:</label>
-            <select name="genero" id="genero">
-                <option value="homem">Homem</option>
-                <option value="mulher">Mulher</option>
-                <option value="outro">Outro</option>
-            </select>
+
+            <label for="endereco">Digite o seu Endereço:</label>
+            <input type="text" name="endereco" id="endereco" required>
+
+            <div style="display: flex; width: 80%; margin: 0 auto;">
+                <div>
+                    <label for="reaisHora">Reais por hora</label>
+                    <input type="number" name="reaisHora" step="0.01">
+                </div>
+                <div>
+                    <label for="HorasnoMes">Horas no mês</label>
+                    <input type="number" name="HorasnoMes">
+                </div>
+            </div>
+            <label for="" class="teste">Seu Curriculo</label>
+            <label for="curriculo" class="label-file">📄 Selecionar Currículo</label>
+            <input type="file" name="curriculo" id="curriculo">
+            <span id="file-name">Nenhum arquivo selecionado</span>
             <input type="submit" value="Enviar">
         </form>
     </div>
+
     <?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nome        = $_POST['nome'];
-        $cpf         = $_POST['CPF'];
-        $nascimento  = $_POST['nascimento'];
-        $email       = $_POST['email'];
-        $telefone    = $_POST['telefone'];
-        $genero      = $_POST['genero'];
-
-        $nascimento  = strtotime($nascimento);
-        $nascimento_f = date("d/m/Y", $nascimento);
-
-
-        $linha = "$nome|$cpf|$nascimento_f|$email|$telefone|ucfirst($genero)\n";
-        file_put_contents("arquivos/registro.txt", $linha, FILE_APPEND);
-        //FILE_APPEND se o arquivo não existir ele cria, e se existir ele cria uma nova linha 
-
-    }
-
-    // EXIBIR TODOS OS DADOS SALVOS
-    $arquivo = "arquivos/registro.txt";
-
+    // EXIBE OS REGISTROS
     if (file_exists($arquivo)) {
-        $linhas = file($arquivo); // Lê todas as linhas do arquivo como um array
+        $linhas = file($arquivo);
         $qtdPessoas = count($linhas);
-        $dados_linha = [];
-        $max_campos = 0;
-        //max_campos professor passou sem for dentro de outro 
-        // echo"<pre>";
-        // var_dump($linhas);
-        // echo"</pre>";
 
         echo "<div class='box2'>";
         echo "<h2>Registros Salvos</h2>";
         echo "<h4>Existem $qtdPessoas registros</h4>";
         echo "<table style='width:100%'>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Data Nascimento</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Gênero</th>
-            </tr>";
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Data Nascimento</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Reais por hora</th>
+            <th>Total horas no mês</th>
+            <th>Ver curriculo</th>
+            <th>Nome do arquivo</th>
+        </tr>";
 
         foreach ($linhas as $linha) {
-            $dados = explode("|", trim($linha)); // Separa os dados e remove \n por causa do trim
-            $dados_linha[] = $dados;
-            //Sempre que tive | ele vai separar
-            // echo "<script>console.log(" . json_encode($dados) . ");</script>";
-
-            if ($max_campos < count($dados)) {
-                $max_campos = count($dados);
-            }
+            $dados = explode("|", trim($linha));
             echo "<tr>";
-            foreach ($dados as $valor) {
-                //htmlspecialchars Converta os caracteres predefinidos "<" (menor que) e ">" (maior que) em entidades HTML:
-                echo "<td>" . htmlspecialchars($valor) . "</td>";
+            foreach ($dados as $indice => $valor) {
+                if ($indice === 7 && !empty($valor)) { // índice 7 é o arquivo
+                    $ext = strtolower(pathinfo($valor, PATHINFO_EXTENSION)); // pega a extensão
+                    if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])) {
+                        echo "<td><a href='" . htmlspecialchars($valor, ENT_QUOTES) . "' target='_blank'><img src='" . htmlspecialchars($valor, ENT_QUOTES) . "' style='max-width:100px; max-height:100px;'></a></td>";
+                    } else {
+                        echo "<td><a href='" . htmlspecialchars($valor, ENT_QUOTES) . "' target='_blank'>Abrir arquivo</a></td>";
+                    }
+                } else {
+                    echo "<td>" . htmlspecialchars($valor, ENT_QUOTES) . "</td>";
+                }
             }
             echo "</tr>";
         }
-
         echo "</table>";
         echo "</div>";
-        echo "<hr>";
-        echo "<pre> <h1>Array dos dados</h1><p>Maximo de campos em um array $max_campos</p>";
-        var_dump($dados_linha);
-        echo "</pre>";
-        echo "<hr>";
-        echo "<pre> <h1>JSON do array</h1>";
-        $json = json_encode($dados_linha, JSON_PRETTY_PRINT);
-        echo ($json . PHP_EOL);
-        echo "</pre>";
     }
-    /* Exemplo de for que o professor passou com o max_campos
-    echo"<tr>";
-        for($i = 1; $i <= $max_campos; $i++){
-            echo"<th>Campo $i</th>";
-        }
-    echo"<tr>";
-    foreach ($dados_linha as $linha_dados) {
-        echo"<tr>";
-        for($i = 0; $i <= $max_campos; $i++){
-            $valor = isset($linha_dados[$i]) ? htmlspecialchars($linha_dados[$i])
-            echo "<td>$valor</td>";
-        }
-        echo"<tr>";
-    }
-        echo"</table>"
-    */
     ?>
 </body>
 <script>
+    document.getElementById('curriculo').addEventListener('change', function() {
+        let fileName = this.files.length > 0 ? this.files[0].name : "Nenhum arquivo selecionado";
+        document.getElementById('file-name').textContent = fileName;
+    });
 </script>
 
 </html>
+
+<?php
+// $target_dir = "uploads/";
+// $target_file = $target_dir . basename($_FILES["curriculo"]["name"]);
+// $uploadOk = 1;
+// $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+// // Check if file already exists
+// if (file_exists($target_file)) {
+//   echo "Sorry, file already exists.";
+//   $uploadOk = 0;
+// }
+
+// // Allow certain file formats
+// if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+// && $imageFileType != "gif" != "txt" ) {
+//   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+//   $uploadOk = 0;
+// }
+
+// // Check if $uploadOk is set to 0 by an error
+// if ($uploadOk == 0) {
+//   echo "Sorry, your file was not uploaded.";
+// // if everything is ok, try to upload file
+// } else {
+//   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+//     echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+//   } else {
+//     echo "Sorry, there was an error uploading your file.";
+//   }
+// }
+// 
+?>

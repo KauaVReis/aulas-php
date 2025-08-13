@@ -1,11 +1,33 @@
+<?php
+$arquivo = "arquivos/registro.txt";
+
+// PROCESSA FORMULÁRIO
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nome        = $_POST['nome'];
+    $cpf         = $_POST['CPF'];
+    $nascimento  = $_POST['nascimento'];
+    $telefone    = $_POST['telefone'];
+    $endereco    = $_POST['endereco'];
+    $reaisHora   = $_POST['reaisHora'];
+    $HorasnoMes  = $_POST['HorasnoMes'];
+
+    $nascimento_f = date("d/m/Y", strtotime($nascimento));
+
+    $linha = "$nome|$cpf|$nascimento_f|$telefone|$endereco|$reaisHora|$HorasnoMes\n";
+    file_put_contents($arquivo, $linha, FILE_APPEND);
+
+    // Redireciona para evitar reenvio ao dar F5
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabuada</title>
-    <style>
+    <title>Formulário e Registros</title>
+     <style>
         /* Usei um tutorial para fazer as sombras estilo neumorfico */
         /* paleta de cor site
             https://coolors.co/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529
@@ -176,123 +198,70 @@
         }
     </style>
 </head>
-
 <body>
-    <div class="box">
-        <h1>Formulario PHP</h1>
-        <form action="" method="post">
-            <label for="nome">Digite o seu nome:</label>
-            <input type="text" name="nome" id="nome" required>
-            <label for="CPF">Digite o seu CPF:</label>
-            <input type="text" name="CPF" id="CPF" required><br>
-            <label for="nascimento">Data Nascimento:</label>
-            <input type="date" name="nascimento" id="nascimento" required>
-            <label for="email">Digite o seu Email:</label>
-            <input type="email" name="email" id="email" required>
-            <label for="telefone">Digite o seu Telefone:</label>
-            <input type="tel" name="telefone" id="telefone" required>
-            <label for="genero">Escolha o seu genero:</label>
-            <select name="genero" id="genero">
-                <option value="homem">Homem</option>
-                <option value="mulher">Mulher</option>
-                <option value="outro">Outro</option>
-            </select>
-            <input type="submit" value="Enviar">
-        </form>
-    </div>
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nome        = $_POST['nome'];
-        $cpf         = $_POST['CPF'];
-        $nascimento  = $_POST['nascimento'];
-        $email       = $_POST['email'];
-        $telefone    = $_POST['telefone'];
-        $genero      = $_POST['genero'];
+<div class="box">
+    <h1>Formulario PHP</h1>
+    <form method="post" action="salvar.php">
+        <label for="nome">Digite o seu nome:</label>
+        <input type="text" name="nome" id="nome" required>
 
-        $nascimento  = strtotime($nascimento);
-        $nascimento_f = date("d/m/Y", $nascimento);
+        <label for="CPF">Digite o seu CPF:</label>
+        <input type="text" name="CPF" id="CPF" required><br>
 
+        <label for="nascimento">Data Nascimento:</label>
+        <input type="date" name="nascimento" id="nascimento" required>
 
-        $linha = "$nome|$cpf|$nascimento_f|$email|$telefone|ucfirst($genero)\n";
-        file_put_contents("arquivos/registro.txt", $linha, FILE_APPEND);
-        //FILE_APPEND se o arquivo não existir ele cria, e se existir ele cria uma nova linha 
+        <label for="telefone">Digite o seu Telefone:</label>
+        <input type="tel" name="telefone" id="telefone" required>
 
-    }
+        <label for="endereco">Digite o seu Endereço:</label>
+        <input type="text" name="endereco" id="endereco" required>
 
-    // EXIBIR TODOS OS DADOS SALVOS
-    $arquivo = "arquivos/registro.txt";
+        <div style="display: flex; width: 80%; margin: 0 auto;">
+            <div>
+                <label for="reaisHora">Reais por hora</label>
+                <input type="number" name="reaisHora" step="0.01">
+            </div>
+            <div>
+                <label for="HorasnoMes">Horas no mês</label>
+                <input type="number" name="HorasnoMes">
+            </div>
+        </div>
+        <input type="submit" value="Enviar">
+    </form>
+</div>
 
-    if (file_exists($arquivo)) {
-        $linhas = file($arquivo); // Lê todas as linhas do arquivo como um array
-        $qtdPessoas = count($linhas);
-        $dados_linha = [];
-        $max_campos = 0;
-        //max_campos professor passou sem for dentro de outro 
-        // echo"<pre>";
-        // var_dump($linhas);
-        // echo"</pre>";
+<?php
+// EXIBE OS REGISTROS
+if (file_exists($arquivo)) {
+    $linhas = file($arquivo);
+    $qtdPessoas = count($linhas);
 
-        echo "<div class='box2'>";
-        echo "<h2>Registros Salvos</h2>";
-        echo "<h4>Existem $qtdPessoas registros</h4>";
-        echo "<table style='width:100%'>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Data Nascimento</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Gênero</th>
-            </tr>";
+    echo "<div class='box2'>";
+    echo "<h2>Registros Salvos</h2>";
+    echo "<h4>Existem $qtdPessoas registros</h4>";
+    echo "<table style='width:100%'>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Data Nascimento</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Reais por hora</th>
+            <th>Total horas no mês</th>
+        </tr>";
 
-        foreach ($linhas as $linha) {
-            $dados = explode("|", trim($linha)); // Separa os dados e remove \n por causa do trim
-            $dados_linha[] = $dados;
-            //Sempre que tive | ele vai separar
-            // echo "<script>console.log(" . json_encode($dados) . ");</script>";
-
-            if ($max_campos < count($dados)) {
-                $max_campos = count($dados);
-            }
-            echo "<tr>";
-            foreach ($dados as $valor) {
-                //htmlspecialchars Converta os caracteres predefinidos "<" (menor que) e ">" (maior que) em entidades HTML:
-                echo "<td>" . htmlspecialchars($valor) . "</td>";
-            }
-            echo "</tr>";
+    foreach ($linhas as $linha) {
+        $dados = explode("|", trim($linha));
+        echo "<tr>";
+        foreach ($dados as $valor) {
+            echo "<td>" . htmlspecialchars($valor) . "</td>";
         }
-
-        echo "</table>";
-        echo "</div>";
-        echo "<hr>";
-        echo "<pre> <h1>Array dos dados</h1><p>Maximo de campos em um array $max_campos</p>";
-        var_dump($dados_linha);
-        echo "</pre>";
-        echo "<hr>";
-        echo "<pre> <h1>JSON do array</h1>";
-        $json = json_encode($dados_linha, JSON_PRETTY_PRINT);
-        echo ($json . PHP_EOL);
-        echo "</pre>";
+        echo "</tr>";
     }
-    /* Exemplo de for que o professor passou com o max_campos
-    echo"<tr>";
-        for($i = 1; $i <= $max_campos; $i++){
-            echo"<th>Campo $i</th>";
-        }
-    echo"<tr>";
-    foreach ($dados_linha as $linha_dados) {
-        echo"<tr>";
-        for($i = 0; $i <= $max_campos; $i++){
-            $valor = isset($linha_dados[$i]) ? htmlspecialchars($linha_dados[$i])
-            echo "<td>$valor</td>";
-        }
-        echo"<tr>";
-    }
-        echo"</table>"
-    */
-    ?>
+    echo "</table>";
+    echo "</div>";
+}
+?>
 </body>
-<script>
-</script>
-
 </html>
